@@ -13,10 +13,16 @@ app.use(express.json()); // because we are sending data in json format
 const uri = process.env.ATLAS_URI; // link to the database
 mongoose.connect(uri); // connecting to db
 
-const connection = mongoose.connection;
+const connection = mongoose.connection; 
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
+
+const exercisesRouter = require('./routes/exercises'); // taking in the routes
+const usersRouter = require('./routes/users');
+
+app.use('/exercises', exercisesRouter); // using the routes
+app.use('/users', usersRouter);
 
 
 app.listen(port, () => {  // starts the server 
